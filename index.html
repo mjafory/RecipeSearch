@@ -19,12 +19,22 @@
 		</label>
 -->
 		<div class="search">
-			<input type="text" id="recipe-query" placeholder="Recipe Search. e.g., chicken">
+			<img class="logo" src="logo.PNG">
+			<input type="text" id="recipe-query" placeholder="Recipe Search. e.g., chicken" onkeyup="handleKeyPress(event)">
 			<button onclick="searchRecipes()"><span class="fa fa-search-plus" style="font-size:25px;color:white;"></span></button>
 		</div>
 		<ul id="recipe-list"></ul>
 	</div>
 	<script>
+		function handleKeyPress(event) {
+			// Check if the pressed key is Enter (key code 13)
+			if (event.key === 'Enter') {
+				// Call the searchRecipes function
+				searchRecipes();
+			}
+		}
+
+
 		function searchRecipes() {
 			const appId = "f27e7c37";
 			const appKey = "0b3671034f74f30d4d32e22404a6ec05";

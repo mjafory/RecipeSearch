@@ -132,7 +132,13 @@ p {
 	padding: 10px;
 }
 
-max-width: content;
+.logo {
+	width: 100px;
+	position: absolute;
+	left: 0px;
+	top: -10px;
+	border: none;
+}
 
 
 img {
@@ -141,6 +147,7 @@ img {
 	margin-bottom: 10px;
 	padding: 10px;
 	border: 2px solid brown;
+	box-shadow: 0px 0px 5px 0px brown;
 }
 
 .tags {
@@ -190,9 +197,25 @@ a:hover {
 
 @media only screen and (max-width: 768px) {
 	#recipe-query {
-		width: 85%;
+		width: 60%;
+		position: relative;
+		left: 80px;
+
 		/* Full width for mobile */
 	}
+
+	button {
+		padding: 6px;
+		font-size: 16px;
+		position: relative;
+		top: 4px;
+		left: 80px;
+		background: black;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+
 
 	.food_title {
 		font-size: 18px;
