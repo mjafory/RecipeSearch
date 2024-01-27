@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@600&family=Roboto:wght@700&family=Signika+Negative:wght@700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="style.css">
+	<title>Recipe Search</title>
+
+</head>
+
+<body>
+	<div id="recipe-container">
+		<!--
+		<label for="recipe-query">Recipe Search
+		</label>
+-->
+		<div class="search">
+			<input type="text" id="recipe-query" placeholder="Recipe Search. e.g., chicken" value="taco">
+			<button onclick="searchRecipes()"><span class="fa fa-search-plus" style="font-size:25px;color:white;"></span></button>
+		</div>
+		<ul id="recipe-list"></ul>
+	</div>
+	<script>
+		function searchRecipes() {
+			const appId = "f27e7c37";
+			const appKey = "0b3671034f74f30d4d32e22404a6ec05";
+			const endpoint = "https://api.edamam.com/api/recipes/v2";
+			const recipeQuery = document.getElementById("recipe-query").value;
+			if (!recipeQuery) {
+				alert("Please enter a recipe to search.");
+				return;
+			}
+			const queryParams = {
+				app_id: appId,
+				app_key: appKey,
+				q: recipeQuery,
+				fields: ["uri", "label", "tags", "image", "ingredientLines", "url", "calories", "totalNutrients"], // Add fields here
+				type: "public",
+			};
+			const queryString = Object.entries(queryParams).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join("&");
+			const apiUrl = `${endpoint}?${queryString}`;
+			fetch(apiUrl).then(response => response.json()).then(data => {
+				displayRecipes(data);
+			}).catch(error => {
+				console.error("Error fetching recipes:", error);
+			});
+		}
+
+		function displayRecipes(data) {
+			const recipeList = document.getElementById("recipe-list");
+			recipeList.innerHTML = "";
+			if (data.hits && data.hits.length > 0) {
+				data.hits.forEach(hit => {
+					const recipe = hit.recipe;
+					const listItem = document.createElement("li");
+					let tags = recipe.tags ? recipe.tags.join(", ") : "No tags available";
+					let description = recipe.ingredientLines ? recipe.ingredientLines.join(", ") : "No description available";
+					let calories = recipe.calories ? `${Math.round(recipe.calories)} calories` : "Calories information not available";
+					let ingredients = recipe.totalNutrients ? formatIngredients(recipe.totalNutrients) : "Ingredients information not available";
+					const formattedIngredients = Object.entries(recipe.totalNutrients).map(([nutrient, data]) => {
+						const amount = Math.floor(data.quantity);
+						return `${nutrient}: ${amount}g`;
+					});
+
+					listItem.innerHTML = `
+					<h3 class="food_title">${recipe.label}</h3>
+					<img src="${recipe.image}" alt="${recipe.label}">
+					<p class="tags">Tags: ${tags}</p>
+					<p class="description">Description: ${description}</p>
+					<p class="calories">Calories: ${Math.floor(recipe.calories)} kcal</p>
+					<p class="ingredients">Ingredients: ${formattedIngredients.join(", ")}</p>
+					<a class="url" href="${recipe.url}" target="_blank">Read more</a>
+					`;
+
+					recipeList.appendChild(listItem);
+				});
+			} else {
+				const listItem = document.createElement("li");
+				listItem.textContent = "No recipes found.";
+				recipeList.appendChild(listItem);
+			}
+		}
+
+		function formatIngredients(totalNutrients) {
+			let formattedIngredients = "";
+			for (const nutrient in totalNutrients) {
+				formattedIngredients += `${nutrient}: ${totalNutrients[nutrient].quantity} ${totalNutrients[nutrient].unit}<br>`;
+			}
+			return formattedIngredients;
+		}
+
+	</script>
+</body>
+
+</html>
