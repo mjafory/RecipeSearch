@@ -20,9 +20,6 @@ This project utilizes the Edamam API for fetching recipe data. Edamam provides a
 ## Demo
 ![Demo](img/demo.gif)
 
-
-
-
 ## Acknowledgments
 - [Font Awesome](https://fontawesome.com/) for providing icons.
 - Edamam for the recipe data API.
