@@ -24,8 +24,6 @@ This project utilizes the Edamam API for fetching recipe data. Edamam provides a
 ### Mobile View
 ![Mobile View](demomobile.PNG)
 
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 - [Font Awesome](https://fontawesome.com/) for providing icons.
