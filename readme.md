@@ -17,12 +17,10 @@ Recipe Search is a web application that allows users to search for recipes based
 ## Edamam API
 This project utilizes the Edamam API for fetching recipe data. Edamam provides a comprehensive nutrition database and a powerful recipe search API that developers can use for free. To access the API, you need to sign up on the [Edamam Developer Portal](https://developer.edamam.com/) and obtain API keys.
 
-## Screenshots
-### Desktop View
-![Desktop View](demodesktop.PNG)
+## Demo
+![Demo](img/demo.gif)
 
-### Mobile View
-![Mobile View](demomobile.PNG)
+
 
 
 ## Acknowledgments
